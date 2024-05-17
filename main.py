@@ -1,3 +1,6 @@
+# Author: Nazaryan Artem
+# Nickname: @slide36
+
 import cv2
 import numpy as np
 import pyautogui
