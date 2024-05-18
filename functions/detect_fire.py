@@ -12,13 +12,6 @@ def detect_fire(frame, dbg, display_mode, hexagon_size):
             h_h = cv2.getTrackbarPos("HIGH_0", "Trackbars")
             h_s = cv2.getTrackbarPos("HIGH_1", "Trackbars")
             h_v = cv2.getTrackbarPos("HIGH_2", "Trackbars")
-        else:
-            l_h = 0
-            l_s = 0
-            l_v = 255
-            h_h = 30
-            h_s = 255
-            h_v = 255
     except:
         l_h = 0
         l_s = 0
