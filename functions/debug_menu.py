@@ -7,10 +7,9 @@ def Debug_menu():
     for i in ["LOW", "HIGH"]:
         for j in range(3):
             param = f"{i}_{j}"
-            if i == "LOW":
-                v = 0
-            else:
-                v = 255
+            
+            v=0 if i== "LOW" else v = 255
+            
             cv2.createTrackbar(param, "Trackbars", v, 255, lambda x: None)
     cv2.createTrackbar("RESET", "Trackbars", 0, 1, lambda x: None)
     cv2.createTrackbar("PRINT", "Trackbars", 0, 1, lambda x: None)
