@@ -11,79 +11,72 @@ from functions.draw_hexagon import draw_hexagon
 from functions.detect_fire import detect_fire
 from functions.detect_fire_direction import detect_fire_direction
 
-dbg = True
-show_direction = False
+class FireDetection:
+    def __init__(self):
+        self.dbg = True
+        self.show_direction = False
+        self.segment_size = 2
+        self.hexagon_size = 296
+        self.display_mode = 0
+        self.prev_center = {}
+        self.directions_queue = deque(maxlen=25)
+        cv2.namedWindow('Fire Detection', cv2.WINDOW_NORMAL)
+        cv2.resizeWindow('Fire Detection', 1280, 720)
 
-# размер сегмента
-segment_size = 2
+    def run(self):
+        while True:
+            curr_frame = pyautogui.screenshot()
+            curr_frame = np.array(curr_frame)
+            curr_frame = curr_frame[:, :, ::-1].copy()
 
-# Размер гексагона
-hexagon_size = 296
+            curr_frame, contours = detect_fire(curr_frame, self.dbg, self.display_mode, self.segment_size)
+            if self.show_direction:
+                curr_frame = detect_fire_direction(curr_frame, contours, self.prev_center)
+            try:
+                if self.dbg:
+                    self.debug_actions()
+            except:
+                s('cls')
+                print('\n\n\tDebug menu: Off ')
 
-# режим отображения (0 - контур, 1 - квадраты, 2 - гексагоны)
-display_mode = 0
+            cv2.imshow('Fire Detection', curr_frame)
 
-# Измените prev_center на словарь, чтобы отслеживать движение каждого контура
-prev_center = {}
+            key = cv2.waitKey(1) & 0xFF
+            actions = {
+                ord('q'): 'break',
+                ord('3'): 'self.show_direction = not self.show_direction',
+                ord('9'): 'self.dbg = not self.dbg',
+                ord('8'): 'Debug_menu(); print("\tDebug menu: On")'
+            }
+            
+            if key in actions:
+                exec(actions[key])
 
-# Инициализация очереди для хранения последних N направлений движения
-directions_queue = deque(maxlen=25)
+        cv2.destroyAllWindows()
 
-# создание окна для отображения результатов
-cv2.namedWindow('Fire Detection', cv2.WINDOW_NORMAL)
-cv2.resizeWindow('Fire Detection', 1280, 720)
+    def debug_actions(self):
+        if cv2.getTrackbarPos("RESET", "Trackbars") == 1:
+            self.reset_trackbars()
+        elif cv2.getTrackbarPos("PRINT", "Trackbars") == 1:
+            self.print_values()
+        elif cv2.getTrackbarPos("DMODE", "Trackbars") in [0, 1, 2]:
+            self.display_mode = cv2.getTrackbarPos("DMODE", "Trackbars")
 
-#Debug_menu()
+    def reset_trackbars(self):
+        cv2.setTrackbarPos("LOW_0", "Trackbars", 0)
+        cv2.setTrackbarPos("LOW_1", "Trackbars", 100)
+        cv2.setTrackbarPos("LOW_2", "Trackbars", 200)
+        cv2.setTrackbarPos("HIGH_0", "Trackbars", 15)
+        cv2.setTrackbarPos("HIGH_1", "Trackbars", 255)
+        cv2.setTrackbarPos("HIGH_2", "Trackbars", 255)
+        cv2.setTrackbarPos("RESET", "Trackbars", 0)
 
-# бесконечный цикл для обнаружения огня в реальном времени
-while True:
-    curr_frame = pyautogui.screenshot()
-    curr_frame = np.array(curr_frame)
-    curr_frame = curr_frame[:, :, ::-1].copy()
+    def print_values(self):
+        print("Current values:")
+        print("LOW:", [cv2.getTrackbarPos(f"LOW_{i}", "Trackbars") for i in range(3)])
+        print("HIGH:", [cv2.getTrackbarPos(f"HIGH_{i}", "Trackbars") for i in range(3)])
+        cv2.setTrackbarPos("PRINT", "Trackbars", 0)
 
-    curr_frame, contours = detect_fire(curr_frame, dbg, display_mode, segment_size)
-    if show_direction:
-        curr_frame = detect_fire_direction(curr_frame, contours, prev_center)
-    try:
-        if dbg == True:
-            if cv2.getTrackbarPos("RESET", "Trackbars") == 1:
-                cv2.setTrackbarPos("LOW_0", "Trackbars", 0)
-                cv2.setTrackbarPos("LOW_1", "Trackbars", 100)
-                cv2.setTrackbarPos("LOW_2", "Trackbars", 200)
-                cv2.setTrackbarPos("HIGH_0", "Trackbars", 15)
-                cv2.setTrackbarPos("HIGH_1", "Trackbars", 255)
-                cv2.setTrackbarPos("HIGH_2", "Trackbars", 255)
-                cv2.setTrackbarPos("RESET", "Trackbars", 0)
-
-            elif cv2.getTrackbarPos("PRINT", "Trackbars") == 1:
-                print("Current values:")
-                print("LOW:", [cv2.getTrackbarPos(f"LOW_{i}", "Trackbars") for i in range(3)])
-                print("HIGH:", [cv2.getTrackbarPos(f"HIGH_{i}", "Trackbars") for i in range(3)])
-                cv2.setTrackbarPos("PRINT", "Trackbars", 0)
-
-            elif cv2.getTrackbarPos("DMODE", "Trackbars") == 0:
-                display_mode = 0
-            elif cv2.getTrackbarPos("DMODE", "Trackbars") == 1:
-                display_mode = 1
-            elif cv2.getTrackbarPos("DMODE", "Trackbars") == 2:
-                display_mode = 2
-    except:
-        s('cls')
-        print('\n\n\tDebug menu: Off ')
-
-    cv2.imshow('Fire Detection', curr_frame)
-
-    key = cv2.waitKey(1) & 0xFF
-    actions = {
-        ord('q'): 'break',
-        ord('3'): 'show_direction = not show_direction',
-        ord('9'): 'dbg = not dbg',
-        ord('8'): 'Debug_menu(); print("\tDebug menu: On")'
-    }
-    
-    if key in actions:
-        exec(actions[key])
-
-
-
-cv2.destroyAllWindows()
+if __name__ == "__main__":
+    fd = FireDetection()
+    fd.run()
