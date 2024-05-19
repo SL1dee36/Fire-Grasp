@@ -69,28 +69,21 @@ while True:
                 display_mode = 2
     except:
         s('cls')
-        print('\n\n     Debug menu: Off ')
-
-
+        print('\n\n\tDebug menu: Off ')
 
     cv2.imshow('Fire Detection', curr_frame)
 
-    key = cv2.waitKey(1)
-    if key & 0xFF == ord('q'):
-        break
-    elif key & 0xFF == ord('0'):
-        display_mode = 0
-    elif key & 0xFF == ord('1'):
-        display_mode = 1
-    elif key & 0xFF == ord('2'):
-        display_mode = 2
-    elif key & 0xFF == ord('3'):
-        show_direction = not show_direction
-    elif key & 0xFF == ord('9'):
-        dbg = not dbg
-    elif key & 0xFF == ord('8'):
-        Debug_menu()
-        print('     Debug menu: On')
+    key = cv2.waitKey(1) & 0xFF
+    actions = {
+        ord('q'): 'break',
+        ord('3'): 'show_direction = not show_direction',
+        ord('9'): 'dbg = not dbg',
+        ord('8'): 'Debug_menu(); print("\tDebug menu: On")'
+    }
+    
+    if key in actions:
+        exec(actions[key])
+
 
 
 cv2.destroyAllWindows()
