@@ -31,7 +31,7 @@
 * **Center of mass:** A point that represents the center of gravity of an object. In this case, it is used to track the movement of the fire.
 
 
-###Principle of operation:
+### Principle of operation:
 
 
 1. **Capture an image:** The program takes a screenshot using PyAutoGUI.
