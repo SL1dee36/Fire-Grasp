@@ -15,4 +15,3 @@ def Debug_menu():
     cv2.createTrackbar("RESET", "Trackbars", 0, 1, lambda x: None)
     cv2.createTrackbar("PRINT", "Trackbars", 0, 1, lambda x: None)
     cv2.createTrackbar("DMODE", "Trackbars", 0, 2, lambda x: None)
-    #cv2.createTrackbar("resolution", "Trackbars", 0, 4, lambda x: None)
