@@ -14,9 +14,9 @@ def detect_fire(frame, dbg, display_mode, hexagon_size):
             h_v = cv2.getTrackbarPos("HIGH_2", "Trackbars")
     except:
         l_h = 0
-        l_s = 0
+        l_s = 100
         l_v = 255
-        h_h = 30
+        h_h = 25
         h_s = 255
         h_v = 255
 
@@ -24,8 +24,8 @@ def detect_fire(frame, dbg, display_mode, hexagon_size):
     upper_fire = np.array([h_h, h_s, h_v])
     mask = cv2.inRange(hsv, lower_fire, upper_fire)
     kernel = np.ones((1, 1), np.uint8)
-    mask = cv2.dilate(mask, kernel, iterations=75)
-    mask = cv2.erode(mask, kernel, iterations=75)
+    mask = cv2.dilate(mask, kernel, iterations=10)
+    mask = cv2.erode(mask, kernel, iterations=50)
     contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     for contour in contours:
         if cv2.contourArea(contour) > hexagon_size * hexagon_size:
