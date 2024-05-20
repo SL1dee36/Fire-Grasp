@@ -11,17 +11,23 @@ from functions.draw_hexagon import draw_hexagon
 from functions.detect_fire import detect_fire
 from functions.detect_fire_direction import detect_fire_direction
 
+WINDOW_WIDTH = 1280
+WINDOW_HEIGHT = 720
+DIRECTIONS_QUEUE_MAXLEN = 25
+SEGMENT_SIZE = 2
+HEXAGON_SIZE = 96
+
 class FireDetection:
     def __init__(self):
         self.dbg = True
         self.show_direction = False
-        self.segment_size = 2
-        self.hexagon_size = 296
+        self.segment_size = SEGMENT_SIZE
+        self.hexagon_size = HEXAGON_SIZE
         self.display_mode = 0
         self.prev_center = {}
-        self.directions_queue = deque(maxlen=25)
+        self.directions_queue = deque(maxlen=DIRECTIONS_QUEUE_MAXLEN)
         cv2.namedWindow('Fire Detection', cv2.WINDOW_NORMAL)
-        cv2.resizeWindow('Fire Detection', 1280, 720)
+        cv2.resizeWindow('Fire Detection', WINDOW_WIDTH, WINDOW_HEIGHT)
 
     def run(self):
         while True:
@@ -43,7 +49,7 @@ class FireDetection:
 
             key = cv2.waitKey(1) & 0xFF
             actions = {
-                ord('q'): 'break',
+                ord('q'): 'exit(0)',
                 ord('3'): 'self.show_direction = not self.show_direction',
                 ord('9'): 'self.dbg = not self.dbg',
                 ord('8'): 'Debug_menu(); print("\tDebug menu: On")'
