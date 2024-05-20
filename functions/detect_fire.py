@@ -2,6 +2,10 @@ import cv2
 import numpy as np
 from functions.draw_hexagon import draw_hexagon
 
+KERNEL_SIZE = (1, 1)
+DILATE_ITERATIONS = 10
+ERODE_ITERATIONS = 50
+
 def detect_fire(frame, dbg, display_mode, hexagon_size):
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
     try:
@@ -19,9 +23,9 @@ def detect_fire(frame, dbg, display_mode, hexagon_size):
     lower_fire = np.array([l_h, l_s, l_v])
     upper_fire = np.array([h_h, h_s, h_v])
     mask = cv2.inRange(hsv, lower_fire, upper_fire)
-    kernel = np.ones((1, 1), np.uint8)
-    mask = cv2.dilate(mask, kernel, iterations=10)
-    mask = cv2.erode(mask, kernel, iterations=50)
+    kernel = np.ones(KERNEL_SIZE, np.uint8)
+    mask = cv2.dilate(mask, kernel, iterations=DILATE_ITERATIONS)
+    mask = cv2.erode(mask, kernel, iterations=ERODE_ITERATIONS)
     contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     for contour in contours:
         if cv2.contourArea(contour) > hexagon_size * hexagon_size:
