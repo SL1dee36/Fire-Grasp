@@ -3,34 +3,40 @@
 Fire-Grasp is an application designed to detect fires in real-time. It uses screenshots from your computer and image processing algorithms to determine the presence of fire.
 
 ### Libraries Used
-* cv2: OpenCV library for image processing and video operations.
-* numpy: Library for handling arrays of data.
-* pyautogui: Library for automating GUI interactions.
+- **cv2:** OpenCV library for image processing and video operations.
+- **numpy:** Library for handling arrays of data.
+- **pyautogui:** Library for automating GUI interactions.
 
 ## Installation
 To install the application and the necessary libraries, follow these steps:
 
-* Clone the repository:
-  ```  git clone https://github.com/SL1dee36/Fire-Grasp.git  ```
+- Clone the repository:
+  ```Console
+  git clone https://github.com/SL1dee36/Fire-Grasp.git 
 
-* Navigate to the project directory:
-  ```  cd Fire-Grasp  ```
+- Navigate to the project directory:
+  ```Console
+  cd Fire-Grasp 
   
-* Install the necessary libraries:
-  ```  pip install -r requirements.txt  ```
+- Install the necessary libraries:
+  ```Console
+  pip install -r requirements.txt 
 
 ## Documentation
 The application consists of several main modules, each performing its function. Here are some key features:
 
-#### Debug Menu
-The debug menu is a feature that allows you to adjust the parameters of the fire detection algorithm in real-time. This includes the lower and upper thresholds for the color range used to detect fire, as well as the display mode.
+  #### Debug Menu
+  The debug menu is a feature that allows you to adjust the parameters of the fire detection algorithm in real-time. This includes the lower and upper thresholds for the color range used to detect fire, as well as the display mode.
 
-#### Display Modes
-There are three display modes available:
+  #### Display Modes
+  There are three display modes available:
 
-  * Mode 0: This mode draws contours around the detected fire.
-  * Mode 1: This mode draws a rectangle around the detected fire.
-  * Mode 2: This mode draws a hexagon around the detected fire.
+  - Mode 0: This mode draws contours around the detected fire.
+  - Mode 1: This mode draws a rectangle around the detected fire.
+  - Mode 2: This mode draws a hexagon around the detected fire.
+  
+  You can add more display and/or output options as well
+  
 
 ## Video Demonstration
 
