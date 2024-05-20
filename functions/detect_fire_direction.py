@@ -1,6 +1,5 @@
 import cv2
 
-
 def detect_fire_direction(frame, contours, prev_center):
     for i, contour in enumerate(contours):
         M = cv2.moments(contour)
