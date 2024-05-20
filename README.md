@@ -36,6 +36,15 @@ The application consists of several main modules, each performing its function. 
   - Mode 2: This mode draws a hexagon around the detected fire.
   
   You can add more display and/or output options as well
+
+  #### Parameters of processing of the received data 
+  - **KERNEL_SIZE:** This is the size of the kernel used for dilatation and erosion operations. A kernel is simply a matrix of a certain size that OpenCV uses to perform these operations. In your case, KERNEL_SIZE = (1, 1), which means that the kernel is a 1x1 matrix.
+  
+  - **DILATE_ITERATIONS:** This is the number of dilate iterations OpenCV will perform on the image. Dilation is the process of increasing the size of objects in an image. In your case, DILATE_ITERATIONS = 10, which means that OpenCV will perform 10 dilatation iterations on the image.
+  
+  - **ERODE_ITERATIONS:** This is the number of erosion iterations that OpenCV will perform on the image. Erosion is the process of reducing the size of objects in an image. In your case, ERODE_ITERATIONS = 50, which means that OpenCV will perform 50 iterations of erosion on the image.
+
+You can use these parameters to customize the fire detection algorithm. Changing `KERNEL_SIZE` can affect the size of objects that the algorithm can detect. Increasing `DILATE_ITERATIONS` can help the algorithm detect larger objects, while increasing `ERODE_ITERATIONS` can help the algorithm detect smaller objects. However, care should be taken as too large values can lead to excessive dilatation or erosion, which can skew the results. Experimenting with these parameters can help you find the optimal settings for your particular application.
   
 
 ## Video Demonstration
@@ -56,15 +65,16 @@ fd.run()
 In this example, we create an instance of the FireDetection class and run it. This will start the fire detection process.
 
 
-Changing Segment Size
+Changing Segment and Kernel sizes
 ```Python
 from main import FireDetection
 
 fd = FireDetection()
 fd.segment_size = 4
+fd.KERNEL_SIZE = (1,1)
 fd.run()
 ```
-In this example, we change the segment size before running the fire detection. This can be useful for adapting to different lighting conditions or image quality.
+In this example, we change the segment & Kernel size before running the fire detection. This can be useful for adapting to different lighting conditions or image quality.
 
 
 Please note that these examples are meant to illustrate the capabilities of the application. Depending on your needs, you can customize them to fit your specific goals.
