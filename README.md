@@ -1,74 +1,73 @@
-### Fire-Grasp [ENG]
-* **the program is designed to detect and track fires in real time.**
+# Fire-Grasp: Detecting Fires in Real-Time
 
+Fire-Grasp is an application designed to detect fires in real-time. It uses screenshots from your computer and image processing algorithms to determine the presence of fire.
 
-### Functionality:
+### Libraries Used
+* cv2: OpenCV library for image processing and video operations.
+* numpy: Library for handling arrays of data.
+* pyautogui: Library for automating GUI interactions.
 
+## Installation
+To install the application and the necessary libraries, follow these steps:
 
-* **Fire detection:** The program analyzes the video stream from the screen using a color segmentation algorithm in the HSV color space. This allows to select pixels corresponding to the color of the flame and ignore other elements of the image.
-* **Contour detection:** After selecting fire pixels, the program applies morphological operations (dilation and erosion) to combine the individual pixels into a single segment. It then looks for contours on that segment to identify areas that are most likely to be fire. Contours are continuous lines that delineate the boundaries of detected objects.
-* **Motion Tracking:** The program tracks the movement of the fire by analyzing the change in the position of the center of mass of each detected contour over time. This allows you to determine which way the fire is moving and visualize it on the screen.
-* **Displaying the results:** The program visualizes the results of its work by superimposing fire contours on the original image. Additionally, it displays the direction of fire movement next to each outline. This allows the user to easily see where the fire is and how it is moving.
-* **Additional features:**
-* **Parameter settings:** The program allows you to manually adjust the range of colors that count as fire using sliders. This allows you to adapt the program to different lighting conditions and fire types.
-* **Display modes:** The program allows you to select the mode of displaying fire contours: normal, squares or hexagons. This allows you to choose the most convenient way to visualize the results.
-* **Debug Menu:** The program provides a debug menu that allows you to change parameters and display current values. This helps developers to test and improve the program.
+* Clone the repository:
+  ```
+  git clone https://github.com/SL1dee36/Fire-Grasp.git
+  ```
 
+* Navigate to the project directory:
+  ```
+  cd Fire-Grasp
+  ```
+  
+* Install the necessary libraries:
+  ```
+  pip install -r requirements.txt
+  ```
 
-### Technologies used:
+## Documentation
+The application consists of several main modules, each performing its function. Here are some key features:
 
+#### Debug Menu
+The debug menu is a feature that allows you to adjust the parameters of the fire detection algorithm in real-time. This includes the lower and upper thresholds for the color range used to detect fire, as well as the display mode.
 
-* **OpenCV Image Processing:** The OpenCV (Open Source Computer Vision Library) library is used for image processing, including color space conversion, morphological operations, contour search, and rendering results. OpenCV provides a wide range of functions for working with images and video.
-* **NumPy:** The NumPy library is used to work with arrays, allowing you to efficiently process image pixels and perform mathematical operations. NumPy provides convenient tools for working with multidimensional arrays, making it indispensable for image processing.
-* **PyAutoGUI:** The PyAutoGUI library is used to capture screen shots that are then processed by a program. PyAutoGUI provides a simple way to interact with the operating system to capture screen shots and control the mouse and keyboard.
+#### Display Modes
+There are three display modes available:
 
-### Terms:
+  * Mode 0: This mode draws contours around the detected fire.
+  * Mode 1: This mode draws a rectangle around the detected fire.
+  * Mode 2: This mode draws a hexagon around the detected fire.
 
+## Video Demonstration
+A video demonstration will be added soon.
 
-* **Color segmentation:** A method of selecting areas of an image based on their color. In this case, the HSV color space is used, which is better suited for color extraction than RGB.
-* **Morphological operations:** Operations that are applied to binary images (black and white) to change their shape. Expansion enlarges areas by filling in neighboring pixels, and erosion reduces areas by removing outermost pixels.
-* **Contours:** Continuous lines that delineate the boundaries of detected objects. Contours are used to define the shape and size of objects.
-* **Center of mass:** A point that represents the center of gravity of an object. In this case, it is used to track the movement of the fire.
-
-
-### Principle of operation:
-
-
-1. **Capture an image:** The program takes a screenshot using PyAutoGUI.
-2. **Color Space Conversion:** The image is converted from RGB to HSV to take advantage of color segmentation to highlight fire.
-3. **Color segmentation:** The program creates a mask that selects pixels in a given range of colors that correspond to fire.
-4. **Morphological operations:** The program applies morphological operations to combine fire pixels into a single segment.
-5. **Search for contours:** The program searches for contours on the segment to identify areas that are likely to be fire.
-6. **Motion Tracking:** The program tracks the changing position of each loop's center of mass over time to determine the direction of fire.
-7. **Display results:** The program overlays fire outlines on the original image and displays the direction of fire movement next to each outline.
-
-
-### Restrictions:
-
-
-* The program is sensitive to changes in lighting and image quality.
-* The program may not be effective in detecting fire in environments with many other moving objects.
-
-
-### Potential applications:
-
-
-* Fire early warning systems.
-* Monitoring wildfires.
-* Safety systems that detect fire and alert you to danger.
-* Demonstration:
-
-
-https://github.com/SL1dee36/Fire-Grasp/assets/84046495/9a460821-9231-4888-a2d4-ff5e93390cf7
+https://github.com/SL1dee36/Fire-Grasp/assets/84046495/adc824c6-3195-4cdd-be09-4cef6ea8217a
 
 
 
-This program demonstrates the capabilities of computer vision to solve real-time fire analysis and detection problems. It can be modified and extended to deal with different scenarios and conditions, for example, to deal with video streams from cameras or to process images from other sources.
+
+## Usage Examples
+Here are some examples of how to use the application:
+
+Fire Detection
+```Python
+from main import FireDetection
+
+fd = FireDetection()
+fd.run()
+```
+In this example, we create an instance of the FireDetection class and run it. This will start the fire detection process.
 
 
-The program may be ineffective at detecting fire in environments with many other objects with similar colors.
-Potential applications:
-Fire early warning systems.
-Wildfire Monitoring.
-Safety systems that detect fire and alert you to danger.
-This program demonstrates the capabilities of computer vision to solve real-time fire analysis and detection problems. It can be modified and extended to deal with different scenarios and conditions, for example, to deal with video streams from cameras or to process images from other sources.
+Changing Segment Size
+```Python
+from main import FireDetection
+
+fd = FireDetection()
+fd.segment_size = 4
+fd.run()
+```
+In this example, we change the segment size before running the fire detection. This can be useful for adapting to different lighting conditions or image quality.
+
+
+Please note that these examples are meant to illustrate the capabilities of the application. Depending on your needs, you can customize them to fit your specific goals.
