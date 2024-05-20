@@ -11,19 +11,13 @@ Fire-Grasp is an application designed to detect fires in real-time. It uses scre
 To install the application and the necessary libraries, follow these steps:
 
 * Clone the repository:
-  ```
-  git clone https://github.com/SL1dee36/Fire-Grasp.git
-  ```
+  ```  git clone https://github.com/SL1dee36/Fire-Grasp.git  ```
 
 * Navigate to the project directory:
-  ```
-  cd Fire-Grasp
-  ```
+  ```  cd Fire-Grasp  ```
   
 * Install the necessary libraries:
-  ```
-  pip install -r requirements.txt
-  ```
+  ```  pip install -r requirements.txt  ```
 
 ## Documentation
 The application consists of several main modules, each performing its function. Here are some key features:
@@ -39,11 +33,8 @@ There are three display modes available:
   * Mode 2: This mode draws a hexagon around the detected fire.
 
 ## Video Demonstration
-A video demonstration will be added soon.
 
 https://github.com/SL1dee36/Fire-Grasp/assets/84046495/adc824c6-3195-4cdd-be09-4cef6ea8217a
-
-
 
 
 ## Usage Examples
