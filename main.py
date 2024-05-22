@@ -17,6 +17,7 @@ DIRECTIONS_QUEUE_MAXLEN = 25
 SEGMENT_SIZE = 2
 HEXAGON_SIZE = 96
 
+
 class FireDetection:
     def __init__(self):
         self.dbg = True
@@ -63,10 +64,14 @@ class FireDetection:
     def debug_actions(self):
         if cv2.getTrackbarPos("RESET", "Trackbars") == 1:
             self.reset_trackbars()
+        elif cv2.getTrackbarPos("RESET", "Trackbars") == 1:
+            self.config_trackbars()
         elif cv2.getTrackbarPos("PRINT", "Trackbars") == 1:
             self.print_values()
         elif cv2.getTrackbarPos("DMODE", "Trackbars") in [0, 1, 2]:
             self.display_mode = cv2.getTrackbarPos("DMODE", "Trackbars")
+        elif cv2.getTrackbarPos("CorrectionTool", "Trackbars") == 1:
+            self.open_corrector()
 
     def reset_trackbars(self):
         cv2.setTrackbarPos("LOW_0", "Trackbars", 0)
