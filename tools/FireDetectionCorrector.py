@@ -108,7 +108,7 @@ class Application(tk.Frame):
                 print(f'Saved!\n\n{lower}\n{upper}')
 
                 self.output.delete("0.0", "end")
-                self.output.insert("0.0", f"\n\tFire Detected!\n\tLOW: {lower if lower is not None else '[0, 65, 150]'}\n\tHIGH: {upper if upper is not None else '[30, 255, 255]'}\n\n\tYou can use the sliders in the debug menu, to change the fire detection parameters\n\tФайл содержащий данные: 'tools/FireDatas.txt'") 
+                self.output.insert("0.0", f"\n\tFire Detected!\n\tLOW: {lower if lower is not None else '[0, 65, 150]'}\n\tHIGH: {upper if upper is not None else '[30, 255, 255]'}\n\n\tYou can use the sliders in the debug menu, to change the fire detection parameters\n\tThe file containing the data: 'tools/FireDatas.txt'") 
 
     def get_fire_mask(self, image, pixels):
         mask = np.zeros(image.shape[:2], dtype=bool)
