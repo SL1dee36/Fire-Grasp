@@ -22,7 +22,7 @@ To install the application and the necessary libraries, follow these steps:
   ```Console
   pip install -r requirements.txt 
 
-## Documentation
+## [Documentation](https://sl1dee36.github.io/page2.html#header01-1z)
 The application consists of several main modules, each performing its function. Here are some key features:
 
   #### Debug Menu
