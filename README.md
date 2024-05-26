@@ -70,7 +70,7 @@ Changing Segment and Kernel sizes
 from main import FireDetection
 
 fd = FireDetection()
-fd.segment_size = 4
+fd.SEGMENT_SIZE = 4
 fd.KERNEL_SIZE = (1,1)
 fd.run()
 ```
