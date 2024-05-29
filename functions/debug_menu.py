@@ -3,7 +3,7 @@ import numpy as np
 
 def Debug_menu():
     cv2.namedWindow("Trackbars")
-    cv2.resizeWindow("Trackbars", 500, 400)
+    cv2.resizeWindow("Trackbars", 500, 550)
     for i in ["LOW", "HIGH"]:
         for j in range(3):
             param = f"{i}_{j}"

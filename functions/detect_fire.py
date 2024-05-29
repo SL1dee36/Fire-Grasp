@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 from functions.draw_hexagon import draw_hexagon
+from scipy.spatial import distance, KDTree
 
 KERNEL_SIZE = (1, 1)
 DILATE_ITERATIONS = 10
@@ -27,11 +28,29 @@ def detect_fire(frame, dbg, display_mode, hexagon_size):
     mask = cv2.dilate(mask, kernel, iterations=DILATE_ITERATIONS)
     mask = cv2.erode(mask, kernel, iterations=ERODE_ITERATIONS)
     contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    contours = sorted(contours, key=cv2.contourArea, reverse=True)  # Сортировка контуров по площади
+
+    centers = []
     for contour in contours:
+        x, y, w, h = cv2.boundingRect(contour)
+        center = (x + w//2, y + h//2)
+        centers.append(center)
+
+    tree = KDTree(centers)
+
+    for i, contour in enumerate(contours):
         if cv2.contourArea(contour) > hexagon_size * hexagon_size:
             x, y, w, h = cv2.boundingRect(contour)
+            center = (x + w//2, y + h//2)
+            max_len = max(w, h)  # Добавлено определение max_len
+
+            # Объединение контуров
+            dists, inds = tree.query(center, 2)  # Запрос двух ближайших соседей
+            for dist, j in zip(dists[1:], inds[1:]):  # Игнорирование первого соседа
+                if dist < max_len // 9:
+                    contours[j] = np.concatenate((contour, contours[j]))
+
             if display_mode == 1:
-                center = (x + w//2, y + h//2)
                 for big_contour in contours:
                     if cv2.pointPolygonTest(big_contour, center, False) > 0:
                         continue
@@ -43,4 +62,5 @@ def detect_fire(frame, dbg, display_mode, hexagon_size):
                 draw_hexagon(frame, (cX, cY), hexagon_size, (0, 255, 0))
             elif display_mode == 0:
                 cv2.drawContours(frame, [contour], -1, (0, 255, 0), 2)
+
     return frame, contours
