@@ -28,25 +28,26 @@ def detect_fire(frame, dbg, display_mode, hexagon_size):
     mask = cv2.dilate(mask, kernel, iterations=DILATE_ITERATIONS)
     mask = cv2.erode(mask, kernel, iterations=ERODE_ITERATIONS)
     contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-    contours = sorted(contours, key=cv2.contourArea, reverse=True)  # Сортировка контуров по площади
+    contours = sorted(contours, key=cv2.contourArea, reverse=True)  # Sorting contours by area
 
     centers = []
     for contour in contours:
         x, y, w, h = cv2.boundingRect(contour)
         center = (x + w//2, y + h//2)
         centers.append(center)
-
-    tree = KDTree(centers)
-
+    try:
+        tree = KDTree(centers)
+    except: pass #Skip if no trees were detected to avoid an error and a crash.
+        
     for i, contour in enumerate(contours):
         if cv2.contourArea(contour) > hexagon_size * hexagon_size:
             x, y, w, h = cv2.boundingRect(contour)
             center = (x + w//2, y + h//2)
-            max_len = max(w, h)  # Добавлено определение max_len
+            max_len = max(w, h)  #
 
-            # Объединение контуров
-            dists, inds = tree.query(center, 2)  # Запрос двух ближайших соседей
-            for dist, j in zip(dists[1:], inds[1:]):  # Игнорирование первого соседа
+            # Combining circuits
+            dists, inds = tree.query(center, 2)  # Request for two immediate neighbors
+            for dist, j in zip(dists[1:], inds[1:]):  # Ignoring the first neighbor, i.e., yourself
                 if dist < max_len // 9:
                     contours[j] = np.concatenate((contour, contours[j]))
 
