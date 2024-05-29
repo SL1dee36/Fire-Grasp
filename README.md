@@ -4,6 +4,7 @@ Fire-Grasp is an application designed to detect fires in real-time. It uses scre
 
 ### Libraries Used
 - **cv2:** OpenCV library for image processing and video operations.
+- **scipy:** Provides algorithms for optimization, integration, interpolation, eigenvalue problems, algebraic equations, differential equations, statistics and many other classes of problems.
 - **numpy:** Library for handling arrays of data.
 - **pyautogui:** Library for automating GUI interactions.
 
