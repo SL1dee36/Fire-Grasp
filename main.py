@@ -14,9 +14,8 @@ from functions.detect_fire_direction import detect_fire_direction
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
 DIRECTIONS_QUEUE_MAXLEN = 25
-SEGMENT_SIZE = 2
+SEGMENT_SIZE = 20
 HEXAGON_SIZE = 96
-
 
 class FireDetection:
     def __init__(self):
@@ -70,8 +69,7 @@ class FireDetection:
             self.print_values()
         elif cv2.getTrackbarPos("DMODE", "Trackbars") in [0, 1, 2]:
             self.display_mode = cv2.getTrackbarPos("DMODE", "Trackbars")
-        elif cv2.getTrackbarPos("CorrectionTool", "Trackbars") == 1:
-            self.open_corrector()
+
 
     def reset_trackbars(self):
         cv2.setTrackbarPos("LOW_0", "Trackbars", 0)
@@ -91,3 +89,5 @@ class FireDetection:
 if __name__ == "__main__":
     fd = FireDetection()
     fd.run()
+
+
