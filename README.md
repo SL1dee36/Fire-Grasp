@@ -52,6 +52,7 @@ You can use these parameters to customize the fire detection algorithm. Changing
 
 https://github.com/SL1dee36/Fire-Grasp/assets/84046495/adc824c6-3195-4cdd-be09-4cef6ea8217a
 
+[How i testing this](https://youtu.be/6vJeOEa6nkw)
 
 ## Usage Examples
 Here are some examples of how to use the application:
