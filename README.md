@@ -1,5 +1,7 @@
 # Fire-Grasp: Detecting Fires in Real-Time
 
+**F**ire **I**dentification and **R**eal-time **E**valuation using **G**raphic **R**ecognition **A**lgorithms for **S**afety and **P**rotection
+
 Fire-Grasp is an application designed to detect fires in real-time. It uses screenshots from your computer and image processing algorithms to determine the presence of fire.
 
 ### Libraries Used
