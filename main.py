@@ -16,6 +16,7 @@ WINDOW_HEIGHT = 720
 DIRECTIONS_QUEUE_MAXLEN = 25
 SEGMENT_SIZE = 20
 HEXAGON_SIZE = 96
+OUTLINE_TYPE = 'SURFACE AREA' #RECTANGLE, HEXAGON
 
 class FireDetection:
     def __init__(self):
@@ -23,7 +24,7 @@ class FireDetection:
         self.show_direction = False
         self.segment_size = SEGMENT_SIZE
         self.hexagon_size = HEXAGON_SIZE
-        self.display_mode = 0
+        self.outline_type = OUTLINE_TYPE
         self.prev_center = {}
         self.directions_queue = deque(maxlen=DIRECTIONS_QUEUE_MAXLEN)
         cv2.namedWindow('Fire Detection', cv2.WINDOW_NORMAL)
@@ -35,7 +36,7 @@ class FireDetection:
             curr_frame = np.array(curr_frame)
             curr_frame = curr_frame[:, :, ::-1].copy()
 
-            curr_frame, contours = detect_fire(curr_frame, self.dbg, self.display_mode, self.segment_size)
+            curr_frame, contours = detect_fire(curr_frame, self.dbg, self.outline_type, self.segment_size)
             if self.show_direction:
                 curr_frame = detect_fire_direction(curr_frame, contours, self.prev_center)
             try:
