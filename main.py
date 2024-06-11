@@ -68,8 +68,8 @@ class FireDetection:
             self.config_trackbars()
         elif cv2.getTrackbarPos("PRINT", "Trackbars") == 1:
             self.print_values()
-        elif cv2.getTrackbarPos("DMODE", "Trackbars") in [0, 1, 2]:
-            self.display_mode = cv2.getTrackbarPos("DMODE", "Trackbars")
+        elif cv2.getTrackbarPos("OUTLINE", "Trackbars") in [0, 1, 2]:
+            self.outline_type = cv2.getTrackbarPos("OUTLINE", "Trackbars")
 
 
     def reset_trackbars(self):
