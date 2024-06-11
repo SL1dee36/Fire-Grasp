@@ -7,7 +7,7 @@ KERNEL_SIZE = (1, 1)
 DILATE_ITERATIONS = 10
 ERODE_ITERATIONS = 50
 
-def detect_fire(frame, dbg, display_mode, hexagon_size):
+def detect_fire(frame, dbg, outline_type, hexagon_size):
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
     try:
         if dbg == True:
@@ -51,17 +51,17 @@ def detect_fire(frame, dbg, display_mode, hexagon_size):
                 if dist < max_len // 9:
                     contours[j] = np.concatenate((contour, contours[j]))
 
-            if display_mode == 1:
+            if outline_type == 'RECTANGLE':
                 for big_contour in contours:
                     if cv2.pointPolygonTest(big_contour, center, False) > 0:
                         continue
                 cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
-            elif display_mode == 2:
+            elif outline_type == 'HEXAGON':
                 M = cv2.moments(contour)
                 cX = int(M["m10"] / M["m00"])
                 cY = int(M["m01"] / M["m00"])
                 draw_hexagon(frame, (cX, cY), hexagon_size, (0, 255, 0))
-            elif display_mode == 0:
+            elif (outline_type == 'SURFACE AREA') or (outline_type == 'SA'):
                 cv2.drawContours(frame, [contour], -1, (0, 255, 0), 2)
 
     return frame, contours
