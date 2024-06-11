@@ -34,11 +34,17 @@ The application consists of several main modules, each performing its function. 
   #### Display Modes
   There are three display modes available:
 
-  - Mode 0: This mode draws contours around the detected fire.
-  - Mode 1: This mode draws a rectangle around the detected fire.
-  - Mode 2: This mode draws a hexagon around the detected fire.
+
+  ```Python
+  fd.outline_type = 'SA' # (SA or SURFACE AREA) This mode draws contours around the detected fire.
+  fd.outline_type = 'RECTANGLE' # (RECTANGLE) This mode draws a rectangle around the detected fire.
+  fd.outline_type = 'HEXAGON' # (HEXAGON) This mode draws a hexagon around the detected fire.
+  ...
+
+  fd.run()
+  ```
   
-  You can add more display and/or output options as well
+  You can add more outline and/or output options as well
 
   #### Parameters of processing of the received data 
   - **KERNEL_SIZE:** This is the size of the kernel used for dilatation and erosion operations. A kernel is simply a matrix of a certain size that OpenCV uses to perform these operations. In your case, KERNEL_SIZE = (1, 1), which means that the kernel is a 1x1 matrix.
