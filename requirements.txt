@@ -2,3 +2,5 @@ opencv-python==4.5.3.56
 numpy==1.21.2
 scipy==1.7.1
 PyAutoGUI==0.9.54
+pillow==10.3.0
+customtkinter==5.2.2
