@@ -88,3 +88,10 @@ In this example, we change the segment & Kernel size before running the fire det
 
 
 Please note that these examples are meant to illustrate the capabilities of the application. Depending on your needs, you can customize them to fit your specific goals.
+
+
+![image](https://github.com/SL1dee36/Fire-Grasp/assets/84046495/8281f717-52a3-4b15-a274-8e684255e744)
+
+
+
+
