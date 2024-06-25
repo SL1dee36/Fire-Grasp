@@ -4,10 +4,10 @@ from functions.draw_hexagon import draw_hexagon
 from scipy.spatial import distance, KDTree
 
 KERNEL_SIZE = (1, 1)
-DILATE_ITERATIONS = 10
-ERODE_ITERATIONS = 50
+DILATE_ITERATIONS = 320
+ERODE_ITERATIONS = 550
 
-def detect_fire(frame, dbg, outline_type, hexagon_size):
+def detect_fire(frame, dbg, outline_type, hexagon_size, lower_bound, upper_bound, dilate_iter, erode_iter):
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
     try:
         if dbg == True:
@@ -17,6 +17,10 @@ def detect_fire(frame, dbg, outline_type, hexagon_size):
             h_h = cv2.getTrackbarPos("HIGH_0", "Trackbars")
             h_s = cv2.getTrackbarPos("HIGH_1", "Trackbars")
             h_v = cv2.getTrackbarPos("HIGH_2", "Trackbars")
+        else:
+
+            l_h, l_s, l_v = lower_bound
+            h_h, h_s, h_v = upper_bound
     except:
         l_h,l_s,l_v = 0,100,255
         h_h,h_s,h_v = 25,255,255
@@ -25,10 +29,10 @@ def detect_fire(frame, dbg, outline_type, hexagon_size):
     upper_fire = np.array([h_h, h_s, h_v])
     mask = cv2.inRange(hsv, lower_fire, upper_fire)
     kernel = np.ones(KERNEL_SIZE, np.uint8)
-    mask = cv2.dilate(mask, kernel, iterations=DILATE_ITERATIONS)
-    mask = cv2.erode(mask, kernel, iterations=ERODE_ITERATIONS)
+    mask = cv2.dilate(mask, kernel, iterations=dilate_iter)  
+    mask = cv2.erode(mask, kernel, iterations=erode_iter)  
     contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-    contours = sorted(contours, key=cv2.contourArea, reverse=True)  # Sorting contours by area
+    contours = sorted(contours, key=cv2.contourArea, reverse=True)
 
     centers = []
     for contour in contours:
@@ -37,17 +41,17 @@ def detect_fire(frame, dbg, outline_type, hexagon_size):
         centers.append(center)
     try:
         tree = KDTree(centers)
-    except: pass #Skip if no trees were detected to avoid an error and a crash.
+    except: pass 
         
     for i, contour in enumerate(contours):
         if cv2.contourArea(contour) > hexagon_size * hexagon_size:
             x, y, w, h = cv2.boundingRect(contour)
             center = (x + w//2, y + h//2)
-            max_len = max(w, h)  #
+            max_len = max(w, h) 
 
             # Combining circuits
-            dists, inds = tree.query(center, 2)  # Request for two immediate neighbors
-            for dist, j in zip(dists[1:], inds[1:]):  # Ignoring the first neighbor, i.e., yourself
+            dists, inds = tree.query(center, 2)  
+            for dist, j in zip(dists[1:], inds[1:]): 
                 if dist < max_len // 9:
                     contours[j] = np.concatenate((contour, contours[j]))
 
