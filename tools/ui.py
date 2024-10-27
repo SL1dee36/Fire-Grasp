@@ -4,7 +4,7 @@ import threading
 import time
 import cv2
 import sys
-sys.path.append("C:\\Users\\Артём\\Desktop\\Fire-Grasp-main")
+sys.path.append("Fire-Grasp-main")
 from main import FireDetection
 from functions.detect_fire import detect_fire
 from functions.detect_fire_direction import detect_fire_direction
